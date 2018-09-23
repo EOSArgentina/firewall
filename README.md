@@ -30,4 +30,15 @@ Parameter on which the rule will be applied.
 
 ### addrule
 
+param, type, value
+
 ### delrule
+
+id
+
+## Installing the Contract
+
+### Set the code on your account
+### Create the table
+### Add rules
+### Test
