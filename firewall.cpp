@@ -109,23 +109,34 @@ bool firewall::check_regex(string reg, string memo){
 //     }
 }
 
-  void firewall::add_rule(string param, string ftype, string val)
+  void firewall::addrule(string param, string ftype, string val)
   {
     rules ds_rules =rules(_self,_self);
     eosio_assert(param == "third_party" || param == "memo" || param == "amount", "Param can only be third_party, memo, amount.");
     eosio_assert(ftype == "whitelist" || ftype == "blacklist" || ftype == "limit" || ftype == "memo", "Filter type can only be whitelist, blacklist, limit or memo.");
     eosio_assert(val.size() <= 128, "Filter value has more than 128 bytes.");
 
+    uint32_t itype;
+    if (ftype == "whitelist") {
+      itype = WHITELIST;
+    } else if ( ftype == "blacklist" ) {
+      itype = BLACKLIST;
+    } else if ( ftype == "limit") {
+      itype = LIMIT;
+    } else if ( ftype == "memo") {
+      itype = MEMO;
+    }
+
     ds_rules.emplace(_self, [&](auto& r)
     {
       r.id = ds_rules.available_primary_key();
       r.parameter =  param;
-      r.filter_type = ftype;
+      r.filter_type = itype;
       r.value = val;
     });
   }
 
-  void firewall::del_rule(uint64_t id)
+  void firewall::delrule(uint64_t id)
   {
     rules ds_rules =rules(_self,_self);
     std::vector<uint64_t> keysForDeletion;

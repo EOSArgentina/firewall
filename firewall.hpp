@@ -13,10 +13,10 @@ class firewall : public eosio::contract {
     void transfer( account_name from, account_name to,eosio::asset quantity,std::string memo );
 
    	// @abi action
-    void add_rule(std::string param, std::string ftype,std::string val);
+    void addrule(std::string param, std::string ftype,std::string val);
 
     // @abi action
-    void del_rule(uint64_t id);
+    void delrule(uint64_t id);
 
   private:
 
